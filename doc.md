@@ -67,6 +67,33 @@ python joboard_class.py
 - Jobs (id, title, description, location, company_id, category_id)
 - Applications (id, user_id, job_id, cover_letter, date_applied)
 
+
+## Commit project
+1. git status
+2. git add .
+3. git commit -m "your message"
+4. git push origin main
+
+5. git commit --amend -m "Nouveau message de commit" #Update a commit message
+    git push --force origin main
+ 6. git clone url_report # Pour cloner le project
+ 7. git remote add origin git@github.com:TON-USER/NOM-DEPOT.git
+ ##Other cmd
+git remote -v                         # vérifier le remote
+git log --oneline --graph --decorate  # historique compact
+git pull --rebase origin main         # récupérer les derniers commits proprement
+git branch -vv                        # voir les branches et suivi
+git rm --cached chemin/fichier        # retirer du suivi Git (garde le fichier local)
+
+
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
 ## Contributing
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
