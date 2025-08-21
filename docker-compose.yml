@@ -1,0 +1,66 @@
+
+
+services:
+  mysql_hevia:
+    image: mysql:8.0
+    container_name: mysql_hevia_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mysql_hevia
+      MYSQL_USER: hevia
+      MYSQL_PASSWORD: hevia
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+
+
+
+  mysql_joboard:
+    image: mysql:8.0
+    container_name: mysql_joboard_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mysql_joboard
+      MYSQL_USER: hevia
+      MYSQL_PASSWORD: hevia
+
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data2:/var/lib/mysql
+  
+  
+
+#Use directly Extension mysql in vscode ,note need to install phpmyadmin
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: phpmyadmin_hevia
+  #   restart: always 
+  #   depends_on:
+  #     - mysql_hevia
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     PMA_HOST: mysql_hevia
+  #     PMA_PORT: 3306
+  #     PMA_USER: hevia
+  #     PMA_PASSWORD: hevia
+
+volumes:
+  mysql_data:
+  mysql_data2:
+
+#Un contenainer est monte sur un volume
+#Command to run docker compose
+# docker-compose up --remonte les containers
+
+# docker-compose up -d --build
+# To stop the containers
+# docker-compose down --To remove the containers and volumes   
+# docker-compose down -v --To remove the containers and volumes   
+
