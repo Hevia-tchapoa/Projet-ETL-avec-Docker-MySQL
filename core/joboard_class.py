@@ -2,135 +2,13 @@ import mysql.connector
 from faker import Faker
 import random
 import pandas as pd
+from core.Mysqlsource import ConnnectToDB
+from core.Create_tables import CreateTables
+from core.Insert_data import InsertUsers
+from core.Load_data import CopyData
 
 
 
-class CreateTables:
-    """Class to create tables in the database."""
-    def __init__(self, cursor:mysql.connector.cursor.MySQLCursor)-> None:
-        self.cursor = cursor
-
-    def create_user_table(self)-> None:
-        """Create the user table."""
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100),
-                email VARCHAR(100),
-                role VARCHAR(100)
-            )
-        """)
-        print("✅ User table created successfully")
-    def create_company_table(self):
-        """Create the company table."""
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS companies (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                location VARCHAR(255) NOT NULL
-            )
-        """)
-        print("✅ companies table created successfully") 
-
-    def create_category_table(self):
-        """Create the category table."""
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS categories (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100) NOT NULL
-            )
-        """)
-        print("✅ Category table created successfully")  
-            
-    def create_job_table(self):
-        """Create the job table."""
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS jobs (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                description TEXT NOT NULL,
-                company_id INT, 
-                category_id INT,
-                FOREIGN KEY (company_id) REFERENCES companies(id),
-                FOREIGN KEY (category_id) REFERENCES categories(id) 
-            )
-        """)
-        print("✅ Job table created successfully")
-    
-    def create_application_table(self):
-        """Create the application table."""
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS applications (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                user_id INT,
-                job_id INT,
-                status VARCHAR(50) NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id),
-                FOREIGN KEY (job_id) REFERENCES jobs(id)
-            )
-        """)
-        print("✅ Application table created successfully")  
-
-
-
-
-#Class insert Users    
-class InsertUsers:
-    def __init__(self, cursor, connection):
-        self.cursor = cursor
-        self.connection = connection
-
-    def insert_users(self, users_list):
-            """Insert users into the users table."""
-            try:
-                query = "INSERT INTO users (name, email, role) VALUES (%s, %s, %s)"
-                self.cursor.execute(query, users_list)
-                self.cursor._connection.commit()
-                
-                return True
-            except mysql.connector.Error as e:
-                print(f"❌ Error inserting user: {e}")
-            return False
-
-
-## Class coppy data from hevia to joboard
-class CopyData:
-    def __init__(self, cursor_hevia, cursor_joboard):
-        self.cursor_hevia = cursor_hevia
-        self.cursor_joboard = cursor_joboard
-
-    def copy_data_to_joboard(self):
-        """Copy data from Hevia database to Joboard database.  """
-        try:
-            #list of tables to copy
-            tables =['applications', 'categories', 'companies', 'jobs', 'users']
-
-            # Copy data from hevia to joboard
-            for table in tables:
-                print(table)
-                self.cursor_hevia.execute(f"SELECT * FROM {table}")
-                results = self.cursor_hevia.fetchall()
-                columns = [i[0] for i in self.cursor_hevia.description]
-                # Exclude 'id' if it's auto-increment
-                if 'id' in columns:
-                    columns_no_id = [col for col in columns if col != 'id']
-                    job_df = pd.DataFrame(results, columns=columns)
-                    data = job_df[columns_no_id].values.tolist()
-                    columns_sql = ", ".join(columns_no_id)
-                    values = ", ".join(["%s"] * len(columns_no_id))
-                else:
-                    job_df = pd.DataFrame(results, columns=columns)
-                    data = job_df.values.tolist()
-                    columns_sql = ", ".join(columns)
-                    values = ", ".join(["%s"] * len(columns))
-                query = f"INSERT INTO {table} ({columns_sql}) VALUES ({values})"
-                self.cursor_joboard.executemany(query, data)
-            print("✅ Data copied successfully from Hevia to Joboard")
-        except mysql.connector.Error as e:
-            print(f"❌ Error copying data: {e}")
-
-
-    
     
 def main():
     bd_hevia, cursor_hevia  = ConnnectToDB(host = "localhost",port = 3306, user = "root", password = "root", database = "mysql_hevia").connect()
