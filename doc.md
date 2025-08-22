@@ -78,6 +78,8 @@ python joboard_class.py
     git push --force origin main
  6. git clone url_report # Pour cloner le project
  7. git remote add origin git@github.com:TON-USER/NOM-DEPOT.git
+
+8. Creer une branch et basculer sur cette branch : it checkout -b feat/etl1 #
  ##Other cmd
 git remote -v                         # vérifier le remote
 git log --oneline --graph --decorate  # historique compact
@@ -93,6 +95,7 @@ git rm --cached chemin/fichier        # retirer du suivi Git (garde le fichier l
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+git pull --rebase
 
 ## Contributing
 1. Fork the repository
