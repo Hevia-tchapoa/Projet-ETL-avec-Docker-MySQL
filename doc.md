@@ -114,3 +114,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - MySQL Connector/Python documentation
 - Faker library documentation
 - Docker documentation
+
+
+
+Faire des test unitaire
+ajouter le linting(mise en forme automatique du code)
+pre-commit
+Enlever les comments
+New project: Faire une api:APi de recommandation : fastapi 
+-installer Fast API
+-Initialiser un docker
