@@ -37,28 +37,12 @@ def main():
 
     # Insert Users
     user = InsertUsers(cursor_hevia, bd_hevia)
-    users_data = [
-        ("Alice Smith", "exemple1@gmail.com", "recruiter"),
-        ("Bob Johnson", "exemple3@gmail.com", "candidate"), 
-        ("Charlie Brown", "exmple4@gmail.com", "recruiter")
-    ]
-    # Insert users into the Hevia database
-    for user_data in users_data:
-        if user.insert_users(user_data):
-            print(f"✅ User {user_data[0]} inserted successfully")
-        else:
-            print(f"❌ Failed to insert user {user_data[0]}")
-    print("✅ All users insertion completed")
-
-    #user.insert_users(users_data)
-
-    print("✅ User inserted successfully in Hevia database")
-
-
+    num_users = 2
+    user.generate_insert_users(num_users)  # call the function to insert users
+    print("✅ Fake users data inserted successfully")
 
     # call the function to generate fake companies
-
-    num_companies = 5
+    num_companies = 2
     companie = InsertCompanies(cursor_hevia, bd_hevia)
     companie.generate_fake_companies(num_companies)
     print("✅ Fake companies data inserted successfully")

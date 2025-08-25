@@ -11,17 +11,25 @@ class InsertUsers:
         self.cursor = cursor
         self.connection = connection
 
-    def insert_users(self, users_list:tuple) -> bool:
-            """Insert users into the users table."""
-            try:
-                query = "INSERT INTO users (name, email, role) VALUES (%s, %s, %s)"
-                self.cursor.execute(query, users_list)
+    def generate_insert_users(self,num_users: int) -> bool:
+        """Generate and Insert users into the users table."""
+        fake = Faker()
+        data = []
+        try:           
+            for _ in range(num_users):
+                name = fake.name()
+                email = fake.email()
+                role = fake.random_element(elements=("recruiter", "candidate"))
+                data.append((name, email, role))
+                print(data)
+                insert_users = "INSERT INTO users (name, email, role) VALUES (%s, %s, %s)"
+                self.cursor.executemany(insert_users, data)
                 self.cursor._connection.commit()
-                
-                return True
-            except mysql.connector.Error as e:
-                print(f"❌ Error inserting user: {e}")
+            print(f"✅ {num_users} users inserted")
+        except mysql.connector.Error as e:
+            print(f"❌ Error inserting users: {e}")
             return False
+
     
 #insert fake data into companies table
 class InsertCompanies:
@@ -39,7 +47,6 @@ class InsertCompanies:
                 name = fake.company()
                 localisation = fake.city()
                 data.append((name, localisation))
-                print(data)
                 insert_companies = "INSERT INTO companies (name, location) VALUES (%s, %s)"
                 self.cursor.executemany(insert_companies, data)
                 self.cursor._connection.commit()
