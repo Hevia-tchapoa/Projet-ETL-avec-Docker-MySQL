@@ -21,10 +21,10 @@ class InsertUsers:
                 email = fake.email()
                 role = fake.random_element(elements=("recruiter", "candidate"))
                 data.append((name, email, role))
-                print(data)
                 insert_users = "INSERT INTO users (name, email, role) VALUES (%s, %s, %s)"
                 self.cursor.executemany(insert_users, data)
                 self.cursor._connection.commit()
+            print(data)
             print(f"✅ {num_users} users inserted")
         except mysql.connector.Error as e:
             print(f"❌ Error inserting users: {e}")
@@ -50,6 +50,7 @@ class InsertCompanies:
                 insert_companies = "INSERT INTO companies (name, location) VALUES (%s, %s)"
                 self.cursor.executemany(insert_companies, data)
                 self.cursor._connection.commit()
+            print(data)
             print(f"✅ {num_companies} fake companies generated")
         except mysql.connector.Error as e:
             print(f"❌ Error generating fake companies: {e}")
