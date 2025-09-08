@@ -82,9 +82,7 @@ def create_tables(cursor:mysql.connector.cursor.MySQLCursor) -> bool:
         print(f"❌ Error creating tables: {e}")
         return False
 
-#Function to generate fake data
 
-# Generation of fake users data
 def generate_fake_users(bd:mysql.connector.connection.MySQLConnection,cursor: mysql.connector.cursor.MySQLCursor, num_users=1) -> bool:
     """Generate and insert fake user data into the users table."""
     fake = Faker()

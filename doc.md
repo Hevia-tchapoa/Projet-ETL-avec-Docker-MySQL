@@ -3,124 +3,95 @@
 ## Description
 A Python-based ETL (Extract, Transform, Load) project that demonstrates data manipulation and transfer between MySQL databases using Docker containers.
 
+## Table of Contents
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+- [Development](#development)
+- [Code Quality](#code-quality)
+- [Future Improvements](#future-improvements)
+- [License](#license)
+
+
 ## Features
-- Create and manage MySQL databases using Docker
-- Generate fake data for testing using Faker
-- Create tables with proper relationships and constraints
-- Insert data into MySQL databases
-- Copy data between databases
-- Execute complex SQL queries
-- Object-oriented implementation with Python classes
+- Docker-based MySQL database management
+- Fake data generation using Faker
+- Automated table creation with relationships
+- Data transfer between databases
+- Complex SQL query execution
+- Object-oriented Python implementation
+- Unit testing with pytest
+- Code quality tools integration
 
 ## Prerequisites
-- Docker
-- Python 3.x
-- MySQL Connector/Python
-- Faker library
-- Pandas
+- Python 3.12+
+- Docker & Docker Compose
+- Git
 
 ## Installation
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/mysql-docker-project.git
-cd mysql-docker-project
+git clone https://github.com/yourusername/Projet-ETL-avec-Docker-MySQL.git
+cd Projet-ETL-avec-Docker-MySQL
 ```
 
-2. Install required Python packages
+2. Create and activate virtual environment
 ```bash
-pip install mysql-connector-python
-pip install faker
-pip install pandas
+python -m venv venv
+.\venv\Scripts\activate  # Windows
 ```
 
-3. Start Docker containers
+3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+4. Start Docker containers
 ```bash
 docker-compose up -d
 ```
 
 ## Project Structure
 ```
-mysql-docker-project/
-├── docker-compose.yml
-├── joboard_class.py
-├── joboard_functions.py
-├── create_load_data.py
-├── mysql-jupyter.ipynb
+Projet-ETL-avec-Docker-MySQL/
+├── core/
+│   ├── __init__.py
+│   ├── create_tables.py
+│   ├── joboard_class.py
+│   └── mysqlsource.py
+├── tests/
+│   ├── __init__.py
+│   └── test_create_tables.py
+├── docker/
+│   └── docker-compose.yml
+├── notebooks/
+│   └── jobboard_db.ipynb
+├── .pre-commit-config.yaml
+├── requirements.txt
 └── README.md
 ```
 
-## Usage
-1. Create databases and tables:
-```python
-python create_load_data.py
+
+
+## Development
+### Setup Development Environment
+```bash
+pip install -r requirements-dev.txt
+pre-commit install
 ```
 
-2. Generate and insert fake data:
-```python
-python joboard_class.py
-```
-
-## Database Schema
-- Users (id, name, email, role)
-- Companies (id, name, location)
-- Categories (id, name)
-- Jobs (id, title, description, location, company_id, category_id)
-- Applications (id, user_id, job_id, cover_letter, date_applied)
+## Future Improvements
+- [ ] FastAPI Implementation
+  - REST API endpoints
+  - Job recommendation system
+  - OpenAPI documentation
+- [ ] CI/CD Pipeline
+- [ ] Enhanced Error Handling
+- [ ] Logging System
 
 
-## Commit project
-1. git status
-2. git add .
-3. git commit -m "your message"
-4. git push origin main
-
-5. git commit --amend -m "Nouveau message de commit" #Update a commit message
-    git push --force origin main
- 6. git clone url_report # Pour cloner le project
- 7. git remote add origin git@github.com:TON-USER/NOM-DEPOT.git
-
-8. Creer une branch et basculer sur cette branch : it checkout -b feat/etl1 #
- ##Other cmd
-git remote -v                         # vérifier le remote
-git log --oneline --graph --decorate  # historique compact
-git pull --rebase origin main         # récupérer les derniers commits proprement
-git branch -vv                        # voir les branches et suivi
-git rm --cached chemin/fichier        # retirer du suivi Git (garde le fichier local)
-
-
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-git pull --rebase
-
-## Contributing
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License
 
-## Authors 
-- Your Name
-
-## Acknowledgments
-- MySQL Connector/Python documentation
-- Faker library documentation
-- Docker documentation
-
-
-
-Faire des test unitaire
-ajouter le linting(mise en forme automatique du code)
-pre-commit
-Enlever les comments
-New project: Faire une api:APi de recommandation : fastapi 
--installer Fast API
--Initialiser un docker
