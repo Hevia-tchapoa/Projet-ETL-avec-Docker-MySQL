@@ -55,23 +55,24 @@ docker-compose up -d
 ## Project Structure
 ```
 Projet-ETL-avec-Docker-MySQL/
-├── core/
+├── core/                   # Core application code
 │   ├── __init__.py
-│   ├── create_tables.py
-│   ├── joboard_class.py
-│   └── mysqlsource.py
-├── tests/
+│   ├── create_tables.py   # Database table creation
+│   ├── joboard_class.py   # Job board functionality
+│   └── mysqlsource.py     # Database connection handling
+├── tests/                 # Test files
 │   ├── __init__.py
 │   └── test_create_tables.py
-├── docker/
+├── docker/               # Docker configuration
 │   └── docker-compose.yml
-├── notebooks/
+├── notebooks/           # Jupyter notebooks
 │   └── jobboard_db.ipynb
+├── docs/               # Documentation
+│   └── etl_process.png
 ├── .pre-commit-config.yaml
 ├── requirements.txt
 └── README.md
 ```
-
 
 
 ## Development
@@ -89,10 +90,8 @@ pre-commit install
 - [ ] CI/CD Pipeline
 - [ ] Enhanced Error Handling
 - [ ] Logging System
-Solve confling
 
 
 
 ## License
 MIT License
-

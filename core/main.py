@@ -55,21 +55,13 @@ def main():
     companie.generate_fake_companies(num_companies)
     print("✅ Fake companies data inserted successfully")
 
-
-
-
-
-
     # call the function to generate fake companies
     num_companies = 2
     companie = InsertCompanies(cursor_hevia, bd_hevia)
     companie.generate_fake_companies(num_companies)
     print("✅ Fake companies data inserted successfully")
 
-
-
-
-    #Copy data from Hevia to Joboard
+    # Copy data from Hevia to Joboard
     if bd_hevia and cursor_hevia and bd_joboard and cursor_joboard:
         copy_data = CopyData(cursor_hevia, cursor_joboard)
         copy_data.copy_data_to_joboard()

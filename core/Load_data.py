@@ -1,21 +1,23 @@
 import mysql.connector
 from faker import Faker
 import pandas as pd
+import random
 
 
+####dtftt
 
 
 class CopyData:
-    """This class copies data from Hevia database to joboard database. """
+    """This class copies data from Hevia database to joboard database."""
+
     def __init__(self, cursor_hevia, cursor_joboard):
         self.cursor_hevia = cursor_hevia
         self.cursor_joboard = cursor_joboard
 
     def copy_data_to_joboard(self):
-        """Copy data from Hevia database to Joboard database.  """
+        """Copy data from Hevia database to Joboard database."""
         try:
-            
-            tables =['applications', 'categories', 'companies', 'jobs', 'users']
+            tables = ["applications", "categories", "companies", "jobs", "users"]
 
             """ Copy data from hevia to joboard"""
             for table in tables:
@@ -24,8 +26,8 @@ class CopyData:
                 results = self.cursor_hevia.fetchall()
                 columns = [i[0] for i in self.cursor_hevia.description]
                 """Exclude 'id' if it's auto-increment"""
-                if 'id' in columns:
-                    columns_no_id = [col for col in columns if col != 'id']
+                if "id" in columns:
+                    columns_no_id = [col for col in columns if col != "id"]
                     job_df = pd.DataFrame(results, columns=columns)
                     data = job_df[columns_no_id].values.tolist()
                     columns_sql = ", ".join(columns_no_id)
@@ -40,4 +42,3 @@ class CopyData:
             print("✅ Data copied successfully from Hevia to Joboard")
         except mysql.connector.Error as e:
             print(f"❌ Error copying data: {e}")
-
