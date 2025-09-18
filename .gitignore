@@ -1,0 +1,20 @@
+
+"""gitignore file to exclude unnecessary files and directories from version control.
+"""
+
+*.pyc
+
+__pycache__/
+core/__pycache__/
+core/tests/__pycache__/
+.pytest_cache/
+
+.vscode/
+
+
+etlenv/
+.env
+
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
