@@ -55,12 +55,3 @@ volumes:
   mysql_data:
   mysql_data2:
 
-#Un contenainer est monte sur un volume
-#Command to run docker compose
-# docker-compose up --remonte les containers
-
-# docker-compose up -d --build
-# To stop the containers
-# docker-compose down --To remove the containers and volumes   
-# docker-compose down -v --To remove the containers and volumes   
-

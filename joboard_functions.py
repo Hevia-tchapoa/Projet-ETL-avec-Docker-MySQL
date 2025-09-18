@@ -36,7 +36,6 @@ def connect_to_db(host:str, port:int, user: str, password:str, database:str)-> t
         return None, None
 
 
-# Function to create tables in the database
 def create_tables(cursor:mysql.connector.cursor.MySQLCursor) -> bool:
     """Create tables in the database if they do not exist."""
     try:
@@ -82,9 +81,7 @@ def create_tables(cursor:mysql.connector.cursor.MySQLCursor) -> bool:
         print(f"❌ Error creating tables: {e}")
         return False
 
-#Function to generate fake data
 
-# Generation of fake users data
 def generate_fake_users(bd:mysql.connector.connection.MySQLConnection,cursor: mysql.connector.cursor.MySQLCursor, num_users=1) -> bool:
     """Generate and insert fake user data into the users table."""
     fake = Faker()
@@ -106,7 +103,7 @@ def generate_fake_users(bd:mysql.connector.connection.MySQLConnection,cursor: my
     return True
 
 
-# Generation of fake Categories data
+
 def generate_fake_category(bd:mysql.connector.connection.MySQLConnection,cursor: mysql.connector.cursor.MySQLCursor, num_category=10) -> bool:
     """Generate and insert fake category data into the categories table."""
     fake = Faker()
@@ -125,7 +122,6 @@ def generate_fake_category(bd:mysql.connector.connection.MySQLConnection,cursor:
         return False
     return True
 
-#Generation of fake Companies data
 def generate_fake_companies(bd:mysql.connector.connection.MySQLConnection,cursor: mysql.connector.cursor.MySQLCursor, num_companies=2) -> bool:
     """Generate and insert fake company data into the companies table."""
     fake = Faker()
@@ -145,7 +141,7 @@ def generate_fake_companies(bd:mysql.connector.connection.MySQLConnection,cursor
         return False
     return True 
 
-#Generation of fake Jobs data
+
 def generate_fake_jobs(bd:mysql.connector.connection.MySQLConnection,cursor: mysql.connector.cursor.MySQLCursor, num_jobs=2) -> bool:
     """Generate and insert fake job data into the jobs table."""
     fake = Faker()
@@ -195,20 +191,17 @@ def generate_fake_jobs(bd:mysql.connector.connection.MySQLConnection,cursor: mys
 
                        
 
-#Function coppy data from hevia to joboard
+
 def copy_data_to_joboard(cursor_hevia:mysql.connector.cursor.MySQLCursor, cursor_joboard:mysql.connector.cursor.MySQLCursor)->None:
     """Copy data from Hevia database to Joboard database.  """
     try:
-        #list of tables to copy
         tables =['applications', 'categories', 'companies', 'jobs', 'users']
 
-        # Copy data from hevia to joboard
         for table in tables:
             print(table)
             cursor_hevia.execute(f"SELECT * FROM {table}")
             results = cursor_hevia.fetchall()
             columns = [i[0] for i in cursor_hevia.description]
-            # Exclude 'id' if it's auto-increment
             if 'id' in columns:
                 columns_no_id = [col for col in columns if col != 'id']
                 job_df = pd.DataFrame(results, columns=columns)
@@ -247,28 +240,25 @@ def main()-> None:
         print("❌ Failed to connect to one or both databases. Exiting.")
 
     
-    # call the function to generate fake users
+
     if bd_hevia and cursor_hevia:
         generate_fake_users(bd_hevia,cursor_hevia, num_users=5)
         print("✅ Fake users data inserted successfully")
     else:
         print("❌ Failed to connect to Hevia database for inserting fake users. Exiting.")
 
-    # call the function to generate fake companies
     if bd_hevia and cursor_hevia:
         generate_fake_companies(bd_hevia,cursor_hevia, num_companies=5)
         print("✅ Fake companies data inserted successfully")
     else:
         print("❌ Failed to connect to Hevia database for inserting fake companies. Exiting.")
     
-    # call the function to generate fake categories
     if bd_hevia and cursor_hevia:
         generate_fake_category(bd_hevia,cursor_hevia, num_category=5)
         print("✅ Fake categories data inserted successfully")
     else:
         print("❌ Failed to connect to Hevia database for inserting fake categories. Exiting.")
     
-    # call the function to generate fake jobs
     if bd_hevia and cursor_hevia:
         generate_fake_jobs(bd_hevia,cursor_hevia, num_jobs=5)
         print("✅ Fake jobs data inserted successfully")
@@ -277,7 +267,6 @@ def main()-> None:
     
     
     
-    # Copy data from hevia to joboard
     if bd_hevia and cursor_hevia and bd_joboard and cursor_joboard:
         copy_data_to_joboard(cursor_hevia, cursor_joboard)
         bd_joboard.commit()

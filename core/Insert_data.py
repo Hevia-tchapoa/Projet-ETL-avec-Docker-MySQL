@@ -3,8 +3,7 @@ from faker import Faker
 import pandas as pd
 
 
-
-#Class insert Users    
+ 
 class InsertUsers:
     """Class to insert users into the database Hevia."""
     def __init__(self, cursor, connection):
@@ -31,7 +30,6 @@ class InsertUsers:
             return False
 
     
-#insert fake data into companies table
 class InsertCompanies:
     """Class to insert companies into the database Hevia."""
     def __init__(self, cursor, connection):
