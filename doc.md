@@ -89,6 +89,7 @@ pre-commit install
 - [ ] CI/CD Pipeline
 - [ ] Enhanced Error Handling
 - [ ] Logging System
+Solve confling
 
 
 
