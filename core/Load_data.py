@@ -7,6 +7,7 @@ import pandas as pd
 
 ## Class coppy data from hevia to joboard
 class CopyData:
+    """This class copies data from Hevia database to joboard database. """
     def __init__(self, cursor_hevia, cursor_joboard):
         self.cursor_hevia = cursor_hevia
         self.cursor_joboard = cursor_joboard
