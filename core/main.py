@@ -53,8 +53,7 @@ def main():
 
 
     # call the function to generate fake companies
-
-    num_companies = 5
+    num_companies = 2
     companie = InsertCompanies(cursor_hevia, bd_hevia)
     companie.generate_fake_companies(num_companies)
     print("✅ Fake companies data inserted successfully")

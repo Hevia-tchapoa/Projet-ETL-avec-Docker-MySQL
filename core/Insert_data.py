@@ -29,6 +29,7 @@ class InsertUsers:
         except mysql.connector.Error as e:
             print(f"❌ Error inserting users: {e}")
             return False
+
     
 #insert fake data into companies table
 class InsertCompanies:
