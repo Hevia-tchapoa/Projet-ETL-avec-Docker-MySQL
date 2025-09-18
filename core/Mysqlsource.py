@@ -1,8 +1,12 @@
 import mysql.connector
 
+
 class ConnnectToDB:
     """Class to handle database connections and operations."""
-    def __init__(self, host:str, port:int, user: str, password:str, database:str)-> None:
+
+    def __init__(
+        self, host: str, port: int, user: str, password: str, database: str
+    ) -> None:
         """Initialize the database connection."""
         self.host = host
         self.port = port
@@ -10,7 +14,7 @@ class ConnnectToDB:
         self.password = password
         self.database = database
 
-    def connect(self)-> tuple[str,str]|tuple[None,None]:
+    def connect(self) -> tuple[str, str] | tuple[None, None]:
         """Connect to the database and return the connection and cursor."""
         try:
             connection = mysql.connector.connect(
@@ -18,7 +22,7 @@ class ConnnectToDB:
                 port=self.port,
                 user=self.user,
                 password=self.password,
-                database=self.database
+                database=self.database,
             )
             cursor = connection.cursor()
             print(f"✅ Connected to {self.database} database successfully")

@@ -1,6 +1,4 @@
 import pytest
-
-#Add test for Mysqlsource class
 from core.Mysqlsource import Mysqlsource
 
 class TestMysqlsource:

@@ -8,13 +8,12 @@ class TestConnectToDB(unittest.TestCase):
     @patch('core.Mysqlsource.mysql.connector.connect')
     def test_connect_success(self, mock_connect):
         """Test successful connection to the database."""
-        # Mock the connection and cursor
+
         mock_connection = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_connection
         mock_connection.cursor.return_value = mock_cursor
 
-        # Initialize the database connection object
         db = ConnnectToDB(
             host="localhost",
             port=3306,
@@ -23,7 +22,6 @@ class TestConnectToDB(unittest.TestCase):
             database="test_db"
         )
 
-        # Call the connect method
         connection, cursor = db.connect()
 
         # Assertions

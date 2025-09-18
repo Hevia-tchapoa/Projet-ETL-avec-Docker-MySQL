@@ -5,7 +5,6 @@ import pandas as pd
 
 
 
-## Class coppy data from hevia to joboard
 class CopyData:
     """This class copies data from Hevia database to joboard database. """
     def __init__(self, cursor_hevia, cursor_joboard):
@@ -15,16 +14,16 @@ class CopyData:
     def copy_data_to_joboard(self):
         """Copy data from Hevia database to Joboard database.  """
         try:
-            #list of tables to copy
+            
             tables =['applications', 'categories', 'companies', 'jobs', 'users']
 
-            # Copy data from hevia to joboard
+            """ Copy data from hevia to joboard"""
             for table in tables:
                 print(table)
                 self.cursor_hevia.execute(f"SELECT * FROM {table}")
                 results = self.cursor_hevia.fetchall()
                 columns = [i[0] for i in self.cursor_hevia.description]
-                # Exclude 'id' if it's auto-increment
+                """Exclude 'id' if it's auto-increment"""
                 if 'id' in columns:
                     columns_no_id = [col for col in columns if col != 'id']
                     job_df = pd.DataFrame(results, columns=columns)

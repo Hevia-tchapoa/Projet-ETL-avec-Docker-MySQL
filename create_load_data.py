@@ -10,7 +10,6 @@ Ensuite, elle insère les données dans la base Hevia, puis effectue une copie d
 """
 
 def create_load_data():
-    #Connexion to MySQL 
     bd_hevia = mysql.connector.connect( 
         host="localhost",
         port=3306,
@@ -32,8 +31,7 @@ def create_load_data():
     print(bd_joboard)
     print("✅ Connecté à MySQL avec succès")
 
-    #Create Tables
-
+    """ Create Tables"""
     create_query =  [
         """
         CREATE TABLE IF NOT EXISTS users (
@@ -42,7 +40,7 @@ def create_load_data():
             email VARCHAR(100) UNIQUE,
             role VARCHAR(100) NOT NULL   
         )
-        """, #ENUM('candidate', 'recruiter') NOT NULL
+        """, 
         """
         CREATE TABLE IF NOT EXISTS companies (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,7 +79,6 @@ def create_load_data():
         """,
 
     ]
-    # Execute the query
     for query in create_query:
         cursor_hevia.execute(query)
         cursor_joboard.execute(query)
@@ -90,9 +87,8 @@ def create_load_data():
     bd_hevia.commit()
     bd_joboard.commit()
     print("✅ Tables created successfully")
-
-    #Insert Data
-    ### Insert users
+   
+    """Insert Users"""
     insert_users = "INSERT INTO users (name, email, role) VALUES (%s, %s, %s)"
     users = [
         ("Alice Dupont", "alice@gmail.com", "candidate"),
@@ -104,7 +100,7 @@ def create_load_data():
     bd_hevia.commit()
     print("✅ Users inserted successfully")
 
-    ### Insert Companies
+    """ Insert Companies"""
     insert_companies = "INSERT INTO companies (name, location) VALUES (%s, %s)"
     companies = [
         ("Tech Innovators", "Paris"),
@@ -115,7 +111,7 @@ def create_load_data():
     bd_hevia.commit()
     print("✅ Companies inserted successfully")
 
-    #### Insert Categories
+    """Insert Categories"""
     insert_categories = "INSERT INTO categories (name) VALUES (%s)"
     categories = [
         ("Développement Web",),
@@ -127,7 +123,7 @@ def create_load_data():
     bd_hevia.commit()
     print("✅ Categories inserted successfully")
 
-    ## Insert Jobs
+    """Insert Jobs"""
     insert_jobs = """
     INSERT INTO jobs (title, description, location, company_id, category_id)
     VALUES (%s, %s, %s, %s, %s)
@@ -142,7 +138,7 @@ def create_load_data():
     print("✅ Jobs inserted successfully")
 
 
-    ##Insert Applications
+    """Insert Applications"""
     insert_applications= """
     INSERT INTO applications (user_id, job_id, cover_letter, date_applied)
     VALUES (%s, %s, %s, %s)
@@ -155,7 +151,7 @@ def create_load_data():
     bd_hevia.commit()
     print("✅  Applications inserted successfully")
 
-    # Display data from hevia database
+    """ Copy data from hevia to joboard """
     print("Data from hevia database:")
     cursor_hevia.execute("SELECT * FROM users")
     print("Users:", cursor_hevia.fetchall())
@@ -172,16 +168,16 @@ def create_load_data():
     cursor_hevia.execute("SELECT * FROM applications")
     print("Applications:", cursor_hevia.fetchall())
 
-    #list of tables to copy
+    
     tables =['applications', 'categories', 'companies', 'jobs', 'users']
 
-    # Copy data from hevia to joboard
+    
     for table in tables:
         print(table)
         cursor_hevia.execute(f"SELECT * FROM {table}")
         results = cursor_hevia.fetchall()
         columns = [i[0] for i in cursor_hevia.description]
-        # Exclude 'id' if it's auto-increment
+        """ Exclude 'id' if it's auto-increment"""
         if 'id' in columns:
             columns_no_id = [col for col in columns if col != 'id']
             job_df = pd.DataFrame(results, columns=columns)
@@ -201,7 +197,7 @@ def create_load_data():
         except Exception as e:
             print(f"❌ Error, table copy lost  {table}: {e}")
 
-    # Close the cursor and connection
+    """ Close connections"""
     cursor_hevia.close()
     cursor_joboard.close()
     bd_hevia.close()
@@ -210,7 +206,7 @@ def create_load_data():
 
 
 
-# ...existing code...
+
 if __name__ == "__main__":
     create_load_data()
     
